@@ -1,0 +1,23 @@
+<mujocoinclude>
+    <actuator>
+        <!-- Open Loop -->
+        <velocity name="front_left_wheel" joint="front_left_wheel" kv="120" forcerange="-87 87" ctrlrange="-2.8973 2.8973"/>
+        <velocity name="front_right_wheel" joint="front_right_wheel" kv="120" forcerange="-87 87" ctrlrange="-1.7628 1.7628"/> 
+        <velocity name="rear_left_wheel" joint="rear_left_wheel"  kv="110" forcerange="-87 87" ctrlrange="-2.8973 2.8973"/> 
+        <velocity name="rear_right_wheel" joint="rear_right_wheel"  kv="110" forcerange="-87 87" ctrlrange="-3.0718 0.0698"/> 
+
+        <!-- Kanayama -->
+        <!-- <velocity name="front_left_wheel" joint="front_left_wheel" kv="50" forcerange="-87 87" ctrlrange="-2.8973 2.8973"/>
+        <velocity name="front_right_wheel" joint="front_right_wheel" kv="50" forcerange="-87 87" ctrlrange="-1.7628 1.7628"/> 
+        <velocity name="rear_left_wheel" joint="rear_left_wheel"  kv="50" forcerange="-87 87" ctrlrange="-2.8973 2.8973"/> 
+        <velocity name="rear_right_wheel" joint="rear_right_wheel"  kv="50" forcerange="-87 87" ctrlrange="-3.0718 0.0698"/>  -->
+    </actuator>
+
+    <sensor> 
+        <framepos name="position_sensor" objtype="site" objname="husky_site"/> 
+        <framequat name="quat_sensor" objtype="site" objname="husky_site"/> 
+        <framelinvel name="linear_velocity_sensor" objtype="site" objname="husky_site"/> 
+        <frameangvel name="angular_velocity_sensor" objtype="site" objname="husky_site"/> 
+    </sensor>
+    
+</mujocoinclude>

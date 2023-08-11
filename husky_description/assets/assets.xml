@@ -1,0 +1,32 @@
+<mujocoinclude>
+
+    <compiler angle="radian" meshdir = "./meshes/"/>
+	<size njmax="8000" nconmax="4000"/>
+    <option timestep="0.0005"/>
+
+    <asset>
+        <texture name="texplane" type="2d" builtin="checker" rgb1=".2 .3 .4" rgb2=".1 0.2 0.3" width="512" height="512"/>
+        <material name="MatGnd" reflectance="0.5" texture="texplane" texrepeat="1 1" texuniform="true"/>
+    </asset>
+    
+    <asset>
+        <mesh name="base_link_viz" file="base_link.stl"/>
+        <mesh name="wheel_viz" file="wheel.stl"/>
+        <mesh name="bumper_viz" file="bumper.stl"/>
+        <mesh name="top_chassis_viz" file="top_chassis.stl"/>
+        <mesh name="top_plate_viz" file="top_plate.stl"/>
+        <mesh name="user_rail_viz" file="user_rail.stl"/>
+    </asset>
+
+    <default>
+        <default class= "husky">
+            <default class="husky_viz">
+                <geom contype="0" conaffinity="0" group="1" type="mesh" rgba=".6 .6 .7 1" mass="0"/>
+            </default>
+            
+            <default class="husky_cls">
+                <geom group="2" rgba="0.79216 0.81961 0.93333 0.5" />
+            </default>    
+        </default>
+    </default>
+</mujocoinclude>
