@@ -1,0 +1,51 @@
+<mujocoinclude>
+
+    <equality>
+        <joint joint1="panda0_finger_joint1" joint2="panda0_finger_joint2" solimp="0.95 0.99 0.001" solref="0.005 1"/>
+    </equality>
+
+    <actuator>
+    
+        <!--  husky  -->
+        <!-- Circle gain - point contact-->
+        <velocity name="front_left_wheel" joint="front_left_wheel" kv="140" forcerange="-87 87" ctrlrange="-2.8973 2.8973"/>
+        <velocity name="front_right_wheel" joint="front_right_wheel" kv="140" forcerange="-87 87" ctrlrange="-1.7628 1.7628"/> 
+        <velocity name="rear_left_wheel" joint="rear_left_wheel"  kv="120" forcerange="-87 87" ctrlrange="-2.8973 2.8973"/> 
+        <velocity name="rear_right_wheel" joint="rear_right_wheel"  kv="120" forcerange="-87 87" ctrlrange="-3.0718 0.0698"/> 
+
+        <!--  panda  -->
+
+        <!-- <motor name="panda0_joint1" joint="panda0_joint1" ctrllimited="true" ctrlrange="-300 300"/>
+        <motor name="panda0_joint2" joint="panda0_joint2" ctrllimited="true" ctrlrange="-300 300"/>
+        <motor name="panda0_joint3" joint="panda0_joint3" ctrllimited="true" ctrlrange="-300 300"/>
+        <motor name="panda0_joint4" joint="panda0_joint4" ctrllimited="true" ctrlrange="-300 300"/>
+        <motor name="panda0_joint5" joint="panda0_joint5" ctrllimited="true" ctrlrange="-300 300"/>
+        <motor name="panda0_joint6" joint="panda0_joint6" ctrllimited="true" ctrlrange="-300 300"/>
+        <motor name="panda0_joint7" joint="panda0_joint7" ctrllimited="true" ctrlrange="-300 300"/> --> 
+ 
+        <position name="panda0_joint1" joint="panda0_joint1" class="panda" kp="870" forcerange="-87 87" ctrlrange="-2.9671 2.9671"/> 
+        <position name="panda0_joint2" joint="panda0_joint2" class="panda" kp="870" forcerange="-87 87" ctrlrange="-1.8326 1.8326"/> 
+        <position name="panda0_joint3" joint="panda0_joint3" class="panda" kp="870" forcerange="-87 87" ctrlrange="-2.9671 2.9671"/> 
+        <position name="panda0_joint4" joint="panda0_joint4" class="panda" kp="870" forcerange="-87 87" ctrlrange="-3.1416 0.0"/> 
+        <position name="panda0_joint5" joint="panda0_joint5" class="panda" kp="120" forcerange="-12 12" ctrlrange="-2.9671 2.9671"/> 
+        <position name="panda0_joint6" joint="panda0_joint6" class="panda" kp="120" forcerange="-12 12" ctrlrange="-1.66 2.1817"/> 
+        <position name="panda0_joint7" joint="panda0_joint7" class="panda" kp="120" forcerange="-12 12" ctrlrange="-2.9671 2.9671"/> 
+
+        <position name="l_gripper_finger_joint" joint="panda0_finger_joint1" class="panda_finger" kp="500" forcerange="-100 100" ctrlrange="0 0.04"/>
+        <position name="r_gripper_finger_joint" joint="panda0_finger_joint2" class="panda_finger" kp="500" forcerange="-100 100" ctrlrange="0 0.04"/>
+        <!-- <motor name="l_gripper_finger_joint" joint="panda0_finger_joint1"/>
+        <motor name="r_gripper_finger_joint" joint="panda0_finger_joint2"/>       -->
+    </actuator>
+
+
+    <sensor> 
+        <framepos name="position_sensor" objtype="site" objname="husky_site"/> 
+        <framelinvel name="linear_velocity_sensor" objtype="site" objname="husky_site"/> 
+        <frameangvel name="angular_velocity_sensor" objtype="site" objname="husky_site"/> 
+        
+        <touch name = "Contact_sensor" site="left_gripper" />
+        <force name = "Force_sensor" site="left_FT" />
+        <torque name = "Torque_sensor" site="left_FT" />
+    </sensor>
+    
+</mujocoinclude>

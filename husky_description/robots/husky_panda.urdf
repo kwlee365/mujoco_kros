@@ -1,0 +1,657 @@
+<?xml version="1.0" ?>
+
+<robot name="husky_panda">
+  <material name="dark_grey">
+    <color rgba="0.2 0.2 0.2 1.0"/>
+  </material>
+  <material name="medium_grey">
+    <color rgba="0.6 0.6 0.6 1.0"/>
+  </material>
+  <material name="light_grey">
+    <color rgba="0.8 0.8 0.8 1.0"/>
+  </material>
+  <material name="yellow">
+    <color rgba="0.8 0.8 0.0 1.0"/>
+  </material>
+  <material name="black">
+    <color rgba="0.15 0.15 0.15 1.0"/>
+  </material>
+  <material name="white">
+    <color rgba="1.0 1.0 1.0 1.0"/>
+  </material>
+  <material name="red">
+    <color rgba="1.0 0.0 0.0 1.0"/>
+  </material>
+  <!-- Base link is the center of the robot's bottom plate -->
+  <link name="base_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://husky_description/meshes/base_link.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0.0 0 0.061875"/>
+      <geometry>
+        <box size="0.9874 0.5709 0.12375"/>
+      </geometry>
+    </collision>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0.17562499999999998"/>
+      <geometry>
+        <box size="0.7899200000000001 0.5709 0.10375"/>
+      </geometry>
+    </collision>
+  </link>
+  <!-- Base footprint is on the ground under the robot -->
+  <link name="base_footprint"/>
+  <joint name="base_footprint_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 -0.13228"/>
+    <parent link="base_link"/>
+    <child link="base_footprint"/>
+  </joint>
+  <!-- Inertial link stores the robot's inertial information -->
+  <link name="inertial_link">
+    <inertial>
+      <mass value="46.034"/>
+      <origin xyz="-0.00065 -0.085 0.062"/>
+      <inertia ixx="0.6022" ixy="-0.02364" ixz="-0.1197" iyy="1.7386" iyz="-0.001544" izz="2.0296"/>
+    </inertial>
+  </link>
+  <joint name="inertial_joint" type="fixed">
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <parent link="base_link"/>
+    <child link="inertial_link"/>
+  </joint>
+  <!-- IMU Link is the standard mounting position for the UM6 IMU.-->
+  <!-- Can be modified with environment variables in /etc/ros/setup.bash -->
+  <link name="imu_link"/>
+  <joint name="imu_joint" type="fixed">
+    <origin rpy="0 -1.5708 3.1416" xyz="0.19 0 0.149"/>
+    <parent link="base_link"/>
+    <child link="imu_link"/>
+  </joint>
+  <gazebo reference="imu_link">
+  </gazebo>
+  <link name="front_left_wheel_link">
+    <inertial>
+      <mass value="2.637"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="0.02467" ixy="0" ixz="0" iyy="0.04411" iyz="0" izz="0.02467"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://husky_description/meshes/wheel.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="1.570795 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.1143" radius="0.1651"/>
+      </geometry>
+    </collision>
+  </link>
+  <gazebo reference="front_left_wheel_link">
+    <mu1 value="1.0"/>
+    <mu2 value="1.0"/>
+    <kp value="10000000.0"/>
+    <kd value="1.0"/>
+    <fdir1 value="1 0 0"/>
+  </gazebo>
+  <joint name="front_left_wheel" type="continuous">
+    <parent link="base_link"/>
+    <child link="front_left_wheel_link"/>
+    <origin rpy="0 0 0" xyz="0.256 0.2854 0.03282"/>
+    <axis rpy="0 0 0" xyz="0 1 0"/>
+  </joint>
+  <transmission name="front_left_wheel_trans" type="SimpleTransmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="front_left_wheel_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    <joint name="front_left_wheel">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
+  <link name="front_right_wheel_link">
+    <inertial>
+      <mass value="2.637"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="0.02467" ixy="0" ixz="0" iyy="0.04411" iyz="0" izz="0.02467"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://husky_description/meshes/wheel.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="1.570795 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.1143" radius="0.1651"/>
+      </geometry>
+    </collision>
+  </link>
+  <gazebo reference="front_right_wheel_link">
+    <mu1 value="1.0"/>
+    <mu2 value="1.0"/>
+    <kp value="10000000.0"/>
+    <kd value="1.0"/>
+    <fdir1 value="1 0 0"/>
+  </gazebo>
+  <joint name="front_right_wheel" type="continuous">
+    <parent link="base_link"/>
+    <child link="front_right_wheel_link"/>
+    <origin rpy="0 0 0" xyz="0.256 -0.2854 0.03282"/>
+    <axis rpy="0 0 0" xyz="0 1 0"/>
+  </joint>
+  <transmission name="front_right_wheel_trans" type="SimpleTransmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="front_right_wheel_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    <joint name="front_right_wheel">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
+  <link name="rear_left_wheel_link">
+    <inertial>
+      <mass value="2.637"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="0.02467" ixy="0" ixz="0" iyy="0.04411" iyz="0" izz="0.02467"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://husky_description/meshes/wheel.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="1.570795 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.1143" radius="0.1651"/>
+      </geometry>
+    </collision>
+  </link>
+  <gazebo reference="rear_left_wheel_link">
+    <mu1 value="1.0"/>
+    <mu2 value="1.0"/>
+    <kp value="10000000.0"/>
+    <kd value="1.0"/>
+    <fdir1 value="1 0 0"/>
+  </gazebo>
+  <joint name="rear_left_wheel" type="continuous">
+    <parent link="base_link"/>
+    <child link="rear_left_wheel_link"/>
+    <origin rpy="0 0 0" xyz="-0.256 0.2854 0.03282"/>
+    <axis rpy="0 0 0" xyz="0 1 0"/>
+  </joint>
+  <transmission name="rear_left_wheel_trans" type="SimpleTransmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="rear_left_wheel_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    <joint name="rear_left_wheel">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
+  <link name="rear_right_wheel_link">
+    <inertial>
+      <mass value="2.637"/>
+      <origin xyz="0 0 0"/>
+      <inertia ixx="0.02467" ixy="0" ixz="0" iyy="0.04411" iyz="0" izz="0.02467"/>
+    </inertial>
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://husky_description/meshes/wheel.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="1.570795 0 0" xyz="0 0 0"/>
+      <geometry>
+        <cylinder length="0.1143" radius="0.1651"/>
+      </geometry>
+    </collision>
+  </link>
+  <gazebo reference="rear_right_wheel_link">
+    <mu1 value="1.0"/>
+    <mu2 value="1.0"/>
+    <kp value="10000000.0"/>
+    <kd value="1.0"/>
+    <fdir1 value="1 0 0"/>
+  </gazebo>
+  <joint name="rear_right_wheel" type="continuous">
+    <parent link="base_link"/>
+    <child link="rear_right_wheel_link"/>
+    <origin rpy="0 0 0" xyz="-0.256 -0.2854 0.03282"/>
+    <axis rpy="0 0 0" xyz="0 1 0"/>
+  </joint>
+  <transmission name="rear_right_wheel_trans" type="SimpleTransmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <actuator name="rear_right_wheel_motor">
+      <mechanicalReduction>1</mechanicalReduction>
+    </actuator>
+    <joint name="rear_right_wheel">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+  </transmission>
+  <!-- Spawn Husky chassis -->
+  <link name="top_chassis_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://husky_description/meshes/top_chassis.dae"/>
+      </geometry>
+    </visual>
+  </link>
+  <!-- Attach chassis to the robot -->
+  <joint name="top_chassis_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="top_chassis_link"/>
+  </joint>
+  <!-- Spawn user rails -->
+  <link name="user_rail_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://husky_description/meshes/user_rail.dae"/>
+      </geometry>
+    </visual>
+  </link>
+  <!-- Attach user rails to base link -->
+  <joint name="user_rail" type="fixed">
+    <origin rpy="0 0 0" xyz="0.272 0 0.245"/>
+    <parent link="base_link"/>
+    <child link="user_rail_link"/>
+  </joint>
+  <!-- Spawn front bumper link -->
+  <link name="front_bumper_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://husky_description/meshes/bumper.dae"/>
+      </geometry>
+    </visual>
+  </link>
+  <!-- Attach front bumper -->
+  <joint name="front_bumper" type="fixed">
+    <origin rpy="0 0 0" xyz="0.48 0 0.091"/>
+    <parent link="base_link"/>
+    <child link="front_bumper_link"/>
+  </joint>
+  <!-- Spawn rear bumper link -->
+  <link name="rear_bumper_link">
+    <visual>
+      <geometry>
+        <mesh filename="package://husky_description/meshes/bumper.dae"/>
+      </geometry>
+    </visual>
+  </link>
+  <!-- Attach rear bumper -->
+  <joint name="rear_bumper" type="fixed">
+    <origin rpy="0 0 3.14159" xyz="-0.48 0 0.091"/>
+    <parent link="base_link"/>
+    <child link="rear_bumper_link"/>
+  </joint>
+  <link name="top_plate_link">
+    <visual>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://husky_description/meshes/top_plate.dae"/>
+      </geometry>
+    </visual>
+    <collision>
+      <origin rpy="0 0 0" xyz="0 0 0"/>
+      <geometry>
+        <mesh filename="package://husky_description/meshes/top_plate.stl"/>
+      </geometry>
+    </collision>
+  </link>
+  <!-- Attach top plate -->
+  <joint name="top_plate_joint" type="fixed">
+    <parent link="base_link"/>
+    <child link="top_plate_link"/>
+    <origin rpy="0 0 0" xyz="0.0812 0 0.245"/>
+  </joint>
+  <!-- Top plate front link -->
+  <joint name="top_plate_front_joint" type="fixed">
+    <parent link="top_plate_link"/>
+    <child link="top_plate_front_link"/>
+    <origin rpy="0 0 0" xyz="0.36367 0 0.00639"/>
+  </joint>
+  <!-- Top plate rear link-->
+  <joint name="top_plate_rear_joint" type="fixed">
+    <parent link="top_plate_link"/>
+    <child link="top_plate_rear_link"/>
+    <origin rpy="0 0 0" xyz="-0.36633 0 0.00639"/>
+  </joint>
+  <link name="top_plate_front_link"/>
+  <link name="top_plate_rear_link"/>
+  <gazebo>
+    <plugin filename="libgazebo_ros_control.so" name="gazebo_ros_control">
+      <robotNamespace>/</robotNamespace>
+      <legacyModeNS>true</legacyModeNS>
+    </plugin>
+  </gazebo>
+  <gazebo>
+    <plugin filename="libhector_gazebo_ros_imu.so" name="imu_controller">
+      <robotNamespace>/</robotNamespace>
+      <updateRate>50.0</updateRate>
+      <bodyName>base_link</bodyName>
+      <topicName>imu/data</topicName>
+      <accelDrift>0.005 0.005 0.005</accelDrift>
+      <accelGaussianNoise>0.005 0.005 0.005</accelGaussianNoise>
+      <rateDrift>0.005 0.005 0.005 </rateDrift>
+      <rateGaussianNoise>0.005 0.005 0.005 </rateGaussianNoise>
+      <headingDrift>0.005</headingDrift>
+      <headingGaussianNoise>0.005</headingGaussianNoise>
+    </plugin>
+  </gazebo>
+  <gazebo>
+    <plugin filename="libhector_gazebo_ros_gps.so" name="gps_controller">
+      <robotNamespace>/</robotNamespace>
+      <updateRate>40</updateRate>
+      <bodyName>base_link</bodyName>
+      <frameId>base_link</frameId>
+      <topicName>navsat/fix</topicName>
+      <velocityTopicName>navsat/vel</velocityTopicName>
+      <referenceLatitude>49.9</referenceLatitude>
+      <referenceLongitude>8.9</referenceLongitude>
+      <referenceHeading>0</referenceHeading>
+      <referenceAltitude>0</referenceAltitude>
+      <drift>0.0001 0.0001 0.0001</drift>
+    </plugin>
+  </gazebo>
+  <!-- This file is a placeholder which is included by default from
+       husky.urdf.xacro. If a robot is being customized and requires
+       additional URDF, set the HUSKY_URDF_EXTRAS environment variable
+       to the full path of the file you would like included. -->
+
+  <joint name="panda_to_world" type="fixed">
+    <parent link="base_link"/>
+    <child link="panda_link0"/>
+    <origin rpy="0 0 0" xyz="0.35 0 0.25"/>
+  </joint>
+  
+   <link name="panda_link0">
+    <visual>
+      <geometry>
+        <mesh filename="link0.stl"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="link0.stl"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="2.91242" />
+      <inertia
+        ixx="0.01"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="0.01"
+        iyz="0.0"
+        izz="0.01" />
+    </inertial>
+  </link>
+   <link name="panda_link1">
+    <visual>
+      <geometry>
+        <mesh filename="link1.stl"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="link1.stl"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="2.7063" />
+      <inertia
+        ixx="0.01"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="0.01"
+        iyz="0.0"
+        izz="0.01" />
+    </inertial>
+
+  </link>
+
+  <joint name="panda_joint1" type="revolute">
+    <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-2.8973" soft_upper_limit="2.8973"/>
+    <origin rpy="0 0 0" xyz="0 0 0.333"/>
+    <parent link="panda_link0"/>
+    <child link="panda_link1"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="87" lower="-2.9671" upper="2.9671" velocity="2.1750"/>
+  </joint>
+  
+  <link name="panda_link2">
+    <visual>
+      <geometry>
+        <mesh filename="package://panda_description/meshes/collision/link2.stl"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://panda_description/meshes/collision/link2.stl"/>
+      </geometry>
+    </collision>
+        <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0"/>
+      <mass
+        value="2.73046" />
+      <inertia
+        ixx="0.01"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="0.01"
+        iyz="0.0"
+        izz="0.01" />
+    </inertial>
+  </link>
+  <joint name="panda_joint2" type="revolute">
+    <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-1.7628" soft_upper_limit="1.7628"/>
+    <origin rpy="-1.57 0 0" xyz="0 0 0"/>
+    <parent link="panda_link1"/>
+    <child link="panda_link2"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="87" lower="-1.8326" upper="1.8326" velocity="2.1750"/>
+  </joint>
+
+  <link name="panda_link3">
+    <visual>
+      <geometry>
+        <mesh filename="package://panda_description/meshes/collision/link3.stl"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://panda_description/meshes/collision/link3.stl"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="2.04104" />
+      <inertia
+        ixx="0.01"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="0.01"
+        iyz="0.0"
+        izz="0.01" />
+    </inertial>
+  </link>
+  <joint name="panda_joint3" type="revolute">
+    <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-2.8973" soft_upper_limit="2.8973"/>
+    <origin rpy="1.57 0 0" xyz="0 -0.316 0"/>
+    <parent link="panda_link2"/>
+    <child link="panda_link3"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="87" lower="-2.9671" upper="2.9671" velocity="2.1750"/>
+  </joint>
+
+  <link name="panda_link4">
+    <visual>
+      <geometry>
+        <mesh filename="package://panda_description/meshes/collision/link4.stl"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://panda_description/meshes/collision/link4.stl"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="2.08129" />
+      <inertia
+        ixx="0.01"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="0.01"
+        iyz="0.0"
+        izz="0.01" />
+    </inertial>
+  </link>
+  <joint name="panda_joint4" type="revolute">
+    <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-3.0718" soft_upper_limit="0.0698"/>
+    <origin rpy="1.57 0 0" xyz="0.0825 0 0"/>
+    <parent link="panda_link3"/>
+    <child link="panda_link4"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="87" lower="-3.1416" upper="0.0" velocity="2.1750"/>
+  </joint>
+
+  <link name="panda_link5">
+    <visual>
+      <geometry>
+        <mesh filename="package://panda_description/meshes/collision/link5.stl"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://panda_description/meshes/collision/link5.stl"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="3.00049" />
+      <inertia
+        ixx="0.01"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="0.01"
+        iyz="0.0"
+        izz="0.01" />
+    </inertial>
+  </link>
+  <joint name="panda_joint5" type="revolute">
+    <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-2.8973" soft_upper_limit="2.8973"/>
+    <origin rpy="-1.57 0 0" xyz="-0.0825 0.384 0"/>
+    <parent link="panda_link4"/>
+    <child link="panda_link5"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="12" lower="-2.9671" upper="2.9671" velocity="2.6100"/>
+  </joint>
+
+  <link name="panda_link6">
+    <visual>
+      <geometry>
+        <mesh filename="package://panda_description/meshes/collision/link6.stl"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://panda_description/meshes/collision/link6.stl"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="1.3235" />
+      <inertia
+        ixx="0.01"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="0.01"
+        iyz="0.0"
+        izz="0.01" />
+    </inertial>
+  </link>
+  <joint name="panda_joint6" type="revolute">
+    <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-0.0873" soft_upper_limit="2.1127"/>
+    <origin rpy="0 -1.57 1.57" xyz="0 0 0"/>
+    <parent link="panda_link5"/>
+    <child link="panda_link6"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="12" lower="-0.0873" upper="3.8223" velocity="2.6100"/>
+  </joint>
+
+  <link name="panda_link7">
+    <visual>
+      <geometry>
+        <mesh filename="package://panda_description/meshes/collision/link7.stl"/>
+      </geometry>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="package://panda_description/meshes/collision/link7.stl"/>
+      </geometry>
+    </collision>
+    <inertial>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <mass
+        value="0.2" />
+      <inertia
+        ixx="0.01"
+        ixy="0.0"
+        ixz="0.0"
+        iyy="0.01"
+        iyz="0.0"
+        izz="0.01" />
+    </inertial>
+  </link>
+  <joint name="panda_joint7" type="revolute">
+    <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-2.8973" soft_upper_limit="2.8973"/>
+    <origin rpy="1.57 -0.7854 0" xyz="0.088 0 0"/>
+    <parent link="panda_link6"/>
+    <child link="panda_link7"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="12" lower="-2.9671" upper="2.9671" velocity="2.6100"/>
+  </joint>
+
+  <link name="panda_link8"/>
+  <joint name="panda_joint8" type="fixed">
+    <origin rpy="0 0 -0.7854" xyz="0 0 0"/>
+    <parent link="panda_link7"/>
+    <child link="panda_link8"/>
+    <axis xyz="0 0 0"/>
+  </joint>
+
+</robot>

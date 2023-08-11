@@ -1,0 +1,71 @@
+digraph G {
+node [shape=box];
+"base_link" [label="base_link"];
+"base_footprint" [label="base_footprint"];
+"front_bumper_link" [label="front_bumper_link"];
+"front_left_wheel_link" [label="front_left_wheel_link"];
+"front_right_wheel_link" [label="front_right_wheel_link"];
+"imu_link" [label="imu_link"];
+"inertial_link" [label="inertial_link"];
+"panda_link0" [label="panda_link0"];
+"panda_link1" [label="panda_link1"];
+"panda_link2" [label="panda_link2"];
+"panda_link3" [label="panda_link3"];
+"panda_link4" [label="panda_link4"];
+"panda_link5" [label="panda_link5"];
+"panda_link6" [label="panda_link6"];
+"panda_link7" [label="panda_link7"];
+"rear_bumper_link" [label="rear_bumper_link"];
+"rear_left_wheel_link" [label="rear_left_wheel_link"];
+"rear_right_wheel_link" [label="rear_right_wheel_link"];
+"top_chassis_link" [label="top_chassis_link"];
+"top_plate_link" [label="top_plate_link"];
+"top_plate_front_link" [label="top_plate_front_link"];
+"top_plate_rear_link" [label="top_plate_rear_link"];
+"user_rail_link" [label="user_rail_link"];
+node [shape=ellipse, color=blue, fontcolor=blue];
+"base_link" -> "base_footprint_joint" [label="xyz: 0 0 -0.13228 \nrpy: 0 -0 0"]
+"base_footprint_joint" -> "base_footprint"
+"base_link" -> "front_bumper" [label="xyz: 0.48 0 0.091 \nrpy: 0 -0 0"]
+"front_bumper" -> "front_bumper_link"
+"base_link" -> "front_left_wheel" [label="xyz: 0.256 0.2854 0.03282 \nrpy: 0 -0 0"]
+"front_left_wheel" -> "front_left_wheel_link"
+"base_link" -> "front_right_wheel" [label="xyz: 0.256 -0.2854 0.03282 \nrpy: 0 -0 0"]
+"front_right_wheel" -> "front_right_wheel_link"
+"base_link" -> "imu_joint" [label="xyz: 0.19 0 0.149 \nrpy: 0 -1.5708 3.1416"]
+"imu_joint" -> "imu_link"
+"base_link" -> "inertial_joint" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"inertial_joint" -> "inertial_link"
+"base_link" -> "panda_to_world" [label="xyz: 0.35 0 0.25 \nrpy: 0 -0 0"]
+"panda_to_world" -> "panda_link0"
+"panda_link0" -> "panda_joint1" [label="xyz: 0 0 0.333 \nrpy: 0 -0 0"]
+"panda_joint1" -> "panda_link1"
+"panda_link1" -> "panda_joint2" [label="xyz: 0 0 0 \nrpy: -1.57 0 0"]
+"panda_joint2" -> "panda_link2"
+"panda_link2" -> "panda_joint3" [label="xyz: 0 -0.316 0 \nrpy: 1.57 -0 0"]
+"panda_joint3" -> "panda_link3"
+"panda_link3" -> "panda_joint4" [label="xyz: 0.0825 0 0 \nrpy: 1.57 -0 0"]
+"panda_joint4" -> "panda_link4"
+"panda_link4" -> "panda_joint5" [label="xyz: -0.0825 0.384 0 \nrpy: -1.57 0 0"]
+"panda_joint5" -> "panda_link5"
+"panda_link5" -> "panda_joint6" [label="xyz: 0 0 0 \nrpy: 0 -1.5708 1.57"]
+"panda_joint6" -> "panda_link6"
+"panda_link6" -> "panda_joint7" [label="xyz: 0.088 0 0 \nrpy: 1.57 -0.7854 7.85048e-17"]
+"panda_joint7" -> "panda_link7"
+"base_link" -> "rear_bumper" [label="xyz: -0.48 0 0.091 \nrpy: 0 -0 3.14159"]
+"rear_bumper" -> "rear_bumper_link"
+"base_link" -> "rear_left_wheel" [label="xyz: -0.256 0.2854 0.03282 \nrpy: 0 -0 0"]
+"rear_left_wheel" -> "rear_left_wheel_link"
+"base_link" -> "rear_right_wheel" [label="xyz: -0.256 -0.2854 0.03282 \nrpy: 0 -0 0"]
+"rear_right_wheel" -> "rear_right_wheel_link"
+"base_link" -> "top_chassis_joint" [label="xyz: 0 0 0 \nrpy: 0 -0 0"]
+"top_chassis_joint" -> "top_chassis_link"
+"base_link" -> "top_plate_joint" [label="xyz: 0.0812 0 0.245 \nrpy: 0 -0 0"]
+"top_plate_joint" -> "top_plate_link"
+"top_plate_link" -> "top_plate_front_joint" [label="xyz: 0.36367 0 0.00639 \nrpy: 0 -0 0"]
+"top_plate_front_joint" -> "top_plate_front_link"
+"top_plate_link" -> "top_plate_rear_joint" [label="xyz: -0.36633 0 0.00639 \nrpy: 0 -0 0"]
+"top_plate_rear_joint" -> "top_plate_rear_link"
+"base_link" -> "user_rail" [label="xyz: 0.272 0 0.245 \nrpy: 0 -0 0"]
+"user_rail" -> "user_rail_link"
+}
