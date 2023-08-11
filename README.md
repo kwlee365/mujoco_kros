@@ -1,7 +1,5 @@
 # MuJoCo Simulation (for KROS)
 
-## Husky + Panda ver.
-
 ## Installation and Execution
 ```sh
 mkdir -p ~/catkin_ws/src
@@ -14,6 +12,6 @@ roslaunch husky_controller simulation.launch
 ```
 
 ## Command
-ex:
+
 - m: Move Husky Robot
 - s: Stop Husky Robot
