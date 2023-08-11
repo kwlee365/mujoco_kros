@@ -1,5 +1,7 @@
 # MuJoCo Simulation (for KROS)
 
+## Panda ver.
+
 ## Installation and Execution
 ```sh
 mkdir -p ~/catkin_ws/src
